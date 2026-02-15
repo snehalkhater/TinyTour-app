@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './db.js';
 import User from './models/user.js';
+import bcrypt from "bcryptjs";
+
 
 const app = express();
 
@@ -19,17 +21,17 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/health',(req, res) => {
+app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
     message: 'Server is healthy',
   });
 });
 
-app.post('/signup',async(req, res) =>{
-  const{name, email,mobile,city,country,password} = req.body;
-  
-  if(!name){
+app.post('/signup', async (req, res) => {
+  const { name, email, mobile, city, country, password } = req.body;
+
+  if (!name) {
     return res.json({
       "success": false,
       "message": "Name is required",
@@ -37,30 +39,33 @@ app.post('/signup',async(req, res) =>{
     });
   }
 
-  if(!email){
+  if (!email) {
     return res.json({
-      "success": false,   
+      "success": false,
       "message": "Email is required",
       "data": null,
     });
   }
 
-  if(!password){
+  if (!password) {
     return res.json({
-      "success": false,     
-      "message": "Password is required",        
+      "success": false,
+      "message": "Password is required",
       "data": null,
     });
   }
 
-  const existingUser = await User.findOne({email});
-  if(existingUser){
-    return res.json({   
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return res.json({
       "success": false,
       "message": "User with this email already exists",
       "data": null,
     });
   }
+
+  const salt = bcrypt.genSaltSync(10);
+  const encryptedpassword = bcrypt.hashSync(password, salt);
 
   const newUser = new User({
     name,
@@ -68,10 +73,10 @@ app.post('/signup',async(req, res) =>{
     mobile,
     city,
     country,
-    password,
+    password: encryptedpassword,
 
   })
-  try{
+  try {
     const savedUser = await newUser.save();
     return res.json({
       "success": true,
@@ -80,7 +85,7 @@ app.post('/signup',async(req, res) =>{
     });
 
   }
-  catch(error){
+  catch (error) {
     return res.json({
       "success": false,
       "message": `user registration failed: ${error.message}`,
@@ -89,10 +94,10 @@ app.post('/signup',async(req, res) =>{
   }
 });
 
-app.post('/login',async(req, res) => {
-  const {email, password} = req.body;
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
 
-  if(!email){
+  if (!email) {
     return res.json({
       "success": false,
       "message": "Email is required",
@@ -100,14 +105,29 @@ app.post('/login',async(req, res) => {
     });
   }
 
-  const existingUser = await User.findOne({email, password}).select("-password");
-  if(existingUser){
+  const existingUser = await User.findOne({ email });
+
+  if (!existingUser) {
+    return res.json({
+      "success": false,
+      "message": "User with this email does not exist",
+      "data": null,
+    });
+  }
+  const isPasswordCorrect = bcrypt.compareSync(
+    password,
+    existingUser.password
+  );
+
+  existingUser.password = undefined;
+
+  if (isPasswordCorrect) {
     return res.json({
       "success": true,
       "message": "login successful",
       "data": existingUser,
     });
-  }else{
+  } else {
     return res.json({
       "success": false,
       "message": "Invalid email or password",
@@ -115,7 +135,6 @@ app.post('/login',async(req, res) => {
     });
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
