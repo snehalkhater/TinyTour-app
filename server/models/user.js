@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose';
 
 const userSchema = new Schema({
     name: {
-        tyepe: String,
+        type: String,
         required: true,
         unique: true,
     },
@@ -23,5 +23,4 @@ const userSchema = new Schema({
 });
 
 const User = model('User', userSchema);
-
 export default User;
