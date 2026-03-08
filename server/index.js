@@ -3,58 +3,27 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './db.js';
 import User from './models/user.js';
+import Tour from './models/Tour.js';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-
 const app = express();
-
 dotenv.config();
-
 app.use(cors());
 app.use(express.json());
-
 const PORT = process.env.PORT || 8080;
 
-
-
-const gatekeeper = (req, res, next) => {
-  console.log("checking access");
-  const { name, issocietymember } = req.body;
-  console.log(`Hello,${name}`)
-  if (issocietymember) {
-
-    next();
-  }
-  else {
-    return res.json({
-      message: "Access is needed",
-    })
-  }
-};
-
-
-const areyoudrunk = (req, res, next) => {
-  const { areyoudrunk } = req.body;
-  if (areyoudrunk) {
-    return res.json({ message: "drunk peopel are not alloweded" });
-  }
-  else {
-    next();
-  }
-
-
-}
-
-const checkJWT =(req, res, next) => {
-  const {authorization} = req.headers;
+const checkJWT = (req, res, next) => {
+  const { authorization } = req.headers;
   const token = authorization && authorization.split(" ")[1];
-  console.log("TOKEN:",token);
-  try{
+  console.log("TOKEN:", token);
+  try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    console.log("decoded JWT:" ,decoded);
     next();
   }
-  catch(err){
+  catch (err) {
     return res.json({
       success: false,
       message: "Invalid or missing token",
@@ -62,16 +31,6 @@ const checkJWT =(req, res, next) => {
     })
   }
 }
-
-const society = (req, res) => {
-  console.log("inside society");
-  const random = Math.round(Math.random() * 100);
-  res.json({ message: "thank you for coming in society", random });
-}
-
-app.post('/society', gatekeeper, areyoudrunk, society)
-
-
 
 app.get('/', (req, res) => {
   res.json({
@@ -86,13 +45,13 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.get("/api_v1",checkJWT, (req, res) => {
-   return res.json ({message: "API V1 is working1"});
+app.get("/api_v1", checkJWT, (req, res) => {
+  return res.json({ message: "API V1 is working1" });
 
 });
 
 app.get("/api_v2", (req, res) => {
- return res.json ({message: "API V2 is working1"});
+  return res.json({ message: "API V2 is working1" });
 
 });
 
@@ -222,6 +181,47 @@ app.post('/login', async (req, res) => {
       "data": null,
     });
   }
+});
+
+
+app.post('/tours',checkJWT, async (req, res) => {
+  const { title, description, cities, startDate, endDate, photos, userId } = req.body;
+
+  const newTour = new Tour({
+    title,
+    description,
+    cities,
+    startDate,
+    endDate,
+    photos,
+    user: req.user.id,
+  });
+
+  try {
+    const savedTour = await newTour.save();
+
+    return res.json({
+      success: true,
+      message: "tour created successfully",
+      data: savedTour,
+    });
+  }
+  catch (error) {
+     return res.json({
+      success: false,
+      message: "tour creation failed",
+      error: error.message
+    });
+  }
+});
+
+app.get('/tours',checkJWT,async (req, res) => {
+  const tours = await Tour.find({user: req.user.id}).populate("user","-password");
+  return res.json({
+    success: true,
+    message: "Fetched tours successfully",
+    data: tours,
+  });
 });
 
 app.listen(PORT, () => {
