@@ -1,9 +1,9 @@
 import React from 'react'
 import { useEffect } from 'react';
-
+import { setPageTitle } from "./../utils.jsx"
 function NewTour() {
         useEffect(() => {
-            document.title="New Tour - TinyTours";
+           setPageTitle("Edit Tour - TinyTours");
         },[]);
   return (
     <div>NewTour</div>
