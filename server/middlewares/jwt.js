@@ -5,14 +5,12 @@ dotenv.config();
 const checkJWT = (req, res, next) => {
   const { authorization } = req.headers;
   const token = authorization && authorization.split(" ")[1];
-  console.log("TOKEN:", token);
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.
+      JWT_SECRET);
     req.user = decoded;
-    console.log("decoded JWT:" ,decoded);
     next();
-  }
-  catch (err) {
+  } catch (err) {
     return res.json({
       success: false,
       message: "JWT Expired",
@@ -21,4 +19,4 @@ const checkJWT = (req, res, next) => {
   }
 }
 
-export {checkJWT};
+export { checkJWT };

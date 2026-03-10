@@ -35,7 +35,9 @@ const tourSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-});
+},
+ {timestamps: true}
+);
 
 const tour = mongoose.model("tour", tourSchema);
 
