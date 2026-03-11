@@ -3,20 +3,25 @@ import Navbar from '../components/Navbar';
 import axios from 'axios';
 import toast, { Toaster } from "react-hot-toast";
 import { getuserJwtToken } from '../utils';
+import addNewTour from "./../assets/add-new-tour.png"
+import { Link } from 'react-router';
 
 function Dashboard() {
 
     const userJWT = getuserJwtToken();
+
     const [tours, setTours] = useState([]);
-    const loadTours = async() => {
-        const response = await axios.get("http://localhost:8080/tours",{
-            headers:{
+
+    const loadTours = async () => {
+        const response = await axios.get("http://localhost:8080/tours", {
+            headers: {
                 Authorization: `Bearer ${userJWT}`,
             }
         });
-        if(response.data.success){
+        if (response.data.success) {
             toast.success(response.data.message);
-        }else{
+            setTours(response.data.data);
+        } else {
             toast.error("failed to load tours");
         }
     };
@@ -29,8 +34,11 @@ function Dashboard() {
         <div>
             <Navbar />
             <h2>Dashboard</h2>
+            <Link to="/tours/new">
+                <img src={addNewTour} alt="add new tour" className='fixed bottom-10 right-10 h-15 cursur-pointer' />
+            </Link>
             <Toaster />
-            </div>
+        </div>
     )
 }
 

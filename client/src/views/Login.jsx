@@ -47,7 +47,7 @@ function Login() {
   return (
     <div>
       <Navbar />
-      <div className="w-75 block mx-auto mt-10 ">
+      <div className="w-75 block mx-auto mt-10">
         <Input type="email"
           placeholder="Email"
           value={loginUser.email}
@@ -64,6 +64,8 @@ function Login() {
         />
         <Button
           title="Login"
+         size="medium" 
+         variant="primary" 
           onClick={checkUserLogin}
         />
 
