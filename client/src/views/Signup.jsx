@@ -5,6 +5,7 @@ import Input from '../components/Input.jsx';
 import Button from '../components/Button.jsx';
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router";
+import Navbar from '../components/Navbar';
 
 function Signup() {
   const [newUser, setnewUser] = useState({
@@ -42,8 +43,7 @@ function Signup() {
 
   return (
     <div>
-      <h1>Signup</h1>
-
+      <Navbar />
       <div className='w-75 block mx-auto '>
         <Input type="text"
           placeholder="Name"

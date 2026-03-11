@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
 import { setPageTitle } from "./../utils.jsx"
+import Navbar from '../components/Navbar';
+
 function EditTour() {
     useEffect(() => {
         setPageTitle("Edit Tour - TinyTours");
     },[]);
   return (
-    <div>EditTour</div>
+    <div>
+      <Navbar />
+      EditTour</div>
   )
 }
 
