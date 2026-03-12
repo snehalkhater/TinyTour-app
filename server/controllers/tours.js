@@ -82,5 +82,6 @@ const putTours = async (req, res) => {
     data: updatedTour,
   })
 
-}
+}; 
+
 export { getTours, postTour, putTours };
