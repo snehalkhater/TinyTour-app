@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { getuserJwtToken } from '../utils';
 import addNewTour from "./../assets/add-new-tour.png"
 import { Link } from 'react-router';
+import TourCard from '../components/TourCard';
 
 function Dashboard() {
 
@@ -33,11 +34,16 @@ function Dashboard() {
 
         <div>
             <Navbar />
-            <h2>Dashboard</h2>
-            <Link to="/tours/new">
-                <img src={addNewTour} alt="add new tour" className='fixed bottom-10 right-10 h-15 cursur-pointer' />
-            </Link>
-            <Toaster />
+            <div className="w-120 block mx-auto mt-10">
+                <h2>Dashboard</h2>
+                <Link to="/tours/new">
+                    <img src={addNewTour} alt="add new tour" className='fixed bottom-10 right-10 h-15 cursur-pointer' />
+                </Link>
+                {tours.map((tourItem, index) => {
+                    return <TourCard key={index} {...tourItem} />;
+                })}
+                <Toaster />
+            </div>
         </div>
     )
 }

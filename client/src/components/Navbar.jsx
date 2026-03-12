@@ -4,6 +4,10 @@ import { getUserData, logoutUser } from '../utils';
 import Button from "./Button";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router";
+import Avtar from "./Avtar";
+
+
+
 function Navbar() {
   const [userData, setUserData] = useState({});
   const fetchUserData = () => {
@@ -25,9 +29,8 @@ function Navbar() {
       <div>
         {
           userData?.name ? (
-            <div className="flex item-center">
-              <sapm className="bg-black text-white flex items-center rounded-full justify-center h-8 w-8 mr-2">{
-                userData?.name[0]}</sapm>
+            <div className="flex item-center gap-2">
+              <Avtar name={userData.name} size="lg"/>
               Hello, {userData.name}!
               <div><Button title="logout" varient="tertiary" size="medium" onClick={logoutUser} /></div>
             </div>
