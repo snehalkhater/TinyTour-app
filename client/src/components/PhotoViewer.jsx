@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { X, Trash } from 'lucide-react';
+import { X, Trash2 } from 'lucide-react';
 
-function PhotoPreview({ imgUrl, show, onclose }) {
+function PhotoPreview({ imgUrl, show, onClose }) {
   if (!show) return null;
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      onclose();
+      onClose();
     }
   };
 
@@ -16,7 +16,7 @@ function PhotoPreview({ imgUrl, show, onclose }) {
       onClick={handleBackdropClick}
     >
       <button
-        onClick={onclose}
+        onClick={onClose}
         className='absolute top-5 right-5 text-white hover:text-gray-300 transition p-2 cursor-pointer'
         aria-label="Close preview"
       >
@@ -31,33 +31,31 @@ function PhotoPreview({ imgUrl, show, onclose }) {
     </div>
   )
 }
-
-function PhotoViewer({ imgUrl, index, showDelete = false, onDelete }) {
+function PhotoViewer({ imgUrl, index, onDelete, showDelete = false }) {
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <div className="relative shadow-md m-1 rounded-xl">
-      {showDelete && (
-        <button
-          className='absolute right-2 top-2 z-10 text-red-600 hover:text-red-700 transition p-1'
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete(imgUrl);
-          }}
-          aria-label="Delete photo"
-        >
-          <Trash size={14} />
-        </button>
-      )}
+    <div className="flex item-center justify-center relative w-fit shadow-md">
       <img
+        key={index}
         src={imgUrl}
         alt={`Tour Photo ${index + 1}`}
-        className="w-24 h-24 rounded-xl object-cover cursor-pointer border border-gray-200 hover:shadow-lg hover:scale-105 transition-all duration-300"
+        className="w-25 h-auto mt-2 rounded-md object-cover mx-2 cursor-pointer"
         onClick={() => setShowPreview(true)}
       />
-      <PhotoPreview imgUrl={imgUrl} show={showPreview} onclose={() => setShowPreview(false)} />
+      {showDelete ? (
+        <Trash2
+          className="absolute right-2 top-2 h-5 w-5 text-red-500 cursor-pointer"
+          onClick={() => onDelete(imgUrl)}
+        />
+      ) : null}
+      <PhotoPreview
+        imgUrl={imgUrl}
+        show={showPreview}
+        onClose={() => setShowPreview(false)}
+      />
     </div>
-  )
+  );
 }
 
 export default PhotoViewer;
