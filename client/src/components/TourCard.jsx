@@ -18,9 +18,9 @@ function TourCard({
 
     const { name, email } = user || {};
     return (
-        <div className='border border-gray-500 px-4 py-2 rounded-md mb-4 shadow-md'>
-            <h2 className='text-xl'>{title}</h2>
-            <p className='text-xs text-gray-500'>{description}</p>
+        <div className='border border-gray-500 px-4 py-2 rounded-md mb-4 shadow-md bg-white'>
+            <h2 className='text-xl playpen-sans'>{title}</h2>
+            <p className='text-xs text-gray-500 playpen-sans'>{description}</p>
             <p className="my-2">
                 <Building2 className="inline-block mr-1" />{" "}
                 {cities.map((city) => {

@@ -23,17 +23,17 @@ function Navbar() {
       <div>
         <Link to="/">
         <img src={Logo} alt="logo" className='h-8 inline-block' />
-        <span>Tiny Tours</span>
+        <span className="playpen-sans">Tiny Tours</span>
         </Link>
       </div>
       <div>
         {
           userData?.name ? (
-            <div className="flex item-center gap-2">
+            <Link to='/dashboard' className="flex item-center gap-2">
               <Avtar name={userData.name} size="lg"/>
               Hello, {userData.name}!
               <div><Button title="logout" varient="tertiary" size="medium" onClick={logoutUser} /></div>
-            </div>
+            </Link>
           ) : (
             <Link to="/login" className="bg-white text-blue-500 px-3 py-1 rounded mr-2">Login</Link>
           )
