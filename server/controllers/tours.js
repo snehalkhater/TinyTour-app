@@ -1,3 +1,4 @@
+import tour from "../models/Tour.js";
 import Tour from "../models/Tour.js";
 import dotenv from "dotenv";
 dotenv.config();
@@ -103,4 +104,36 @@ const getTourById = async (req, res) => {
     data: tour,
   });
 };
-export { getTours, postTour, putTours, getTourById };
+
+const deleteTour = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+    const tour = await Tour.findById(id);
+    if (!tour) {
+      return res.status(404).json({
+        success: false,
+        message: "Tour not found",
+      });
+    }
+    if (tour.user.toString() !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized to delete this tour",
+      });
+    }
+    await Tour.findByIdAndDelete(id);
+    return res.json({
+      success: true,
+      message: "Tour deleted successfully",
+    });
+  } catch (error) {
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to delete tour",
+      error: error.message,
+    });
+  }
+};
+export { getTours, postTour, putTours, getTourById, deleteTour };

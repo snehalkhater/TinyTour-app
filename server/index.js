@@ -5,7 +5,7 @@ import connectDB from './db.js';
 import { checkJWT } from './middlewares/jwt.js';
 import { getHome, getHealth } from './controllers/health.js';
 import { postSignup, postLogin } from './controllers/auth.js';
-import { getTours, postTour, putTours, getTourById } from './controllers/tours.js';
+import { getTours, postTour, putTours, getTourById, deleteTour } from './controllers/tours.js';
 import ImageKit from "@imagekit/nodejs";
 
 
@@ -35,6 +35,7 @@ app.post('/tours', checkJWT, postTour);
 app.get('/tours', checkJWT, getTours);
 app.put('/tours/:id', checkJWT, putTours);
 app.get('/tours/:id', checkJWT, getTourById);
+app.delete('/tours/:id', checkJWT, deleteTour)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
