@@ -127,13 +127,13 @@ function NewTour() {
 
 
   useEffect(() => {
-    setPageTitle("Edit Tour - TinyTours");
+    setPageTitle("New Tour - TinyTours");
   }, []);
   return (
     <div>
       <Navbar />
-      <h1>Add New Tour</h1>
-      <div className='w-85 block mx-auto '>
+      <h1 className='text-center mt-10 playpen-sans text-xl'>Let's Add a New Travel Story</h1>
+      <div className='w-85 block mx-auto my-3'>
         <Input type="text"
           placeholder="Enter Title..."
           value={newTour.title}
@@ -222,7 +222,7 @@ function NewTour() {
       <div className='w-80 block mx-auto mt-10'>
         <Button title="Add Tour"
           varient='primary'
-          size='medium'
+          size='large'
           onClick={addTour}
         />
       </div>

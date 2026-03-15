@@ -17,7 +17,7 @@ function Button({ title, onClick, size = "medium", variant = "primary" }) {
   return (
     <button
       onClick={onClick}
-      className={`${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} rounded playpen-sans`}
+      className={`${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} rounded playpen-sans cursor-pointer`}
     >
       {title}
     </button>

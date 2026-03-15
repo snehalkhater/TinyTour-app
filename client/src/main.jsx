@@ -20,7 +20,7 @@ root.render(
       <Route path='/dashboard' element={<Dashboard />}></Route>
       <Route path='/tours' element={<Tours />}></Route>
       <Route path='/tours/new' element={<NewTour />}></Route>
-      <Route path='/tours/edit' element={<EditTour />}></Route>
+      <Route path='/tours/:id/edit' element={<EditTour />}></Route>
     </Routes>
   </BrowserRouter>
 

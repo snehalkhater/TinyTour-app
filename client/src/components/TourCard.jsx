@@ -1,6 +1,7 @@
-import { Building2, Footprints, Goal } from "lucide-react";
+import { Building2, Footprints, Goal, FilePenLine } from "lucide-react";
 import Avtar from "./Avtar";
 import PhotoViewer from "./PhotoViewer";
+import { Link } from "react-router";
 
 
 function TourCard({
@@ -18,7 +19,7 @@ function TourCard({
 
     const { name, email } = user || {};
     return (
-        <div className='border border-gray-500 px-4 py-2 rounded-md mb-4 shadow-md bg-white'>
+        <div className='relative border border-gray-500 px-4 py-2 rounded-md mb-4 shadow-md bg-white'>
             <h2 className='text-xl playpen-sans'>{title}</h2>
             <p className='text-xs text-gray-500 playpen-sans'>{description}</p>
             <p className="my-2">
@@ -34,7 +35,7 @@ function TourCard({
 
             <p className="flex items-center my-2 text-sm">
                 <Footprints className="mx-2 h-6 w-6" />Started on:{new Date(startDate).toLocaleDateString()}
-                <Goal  className="mx-4 h-6 w-6"/>
+                <Goal className="mx-4 h-6 w-6" />
                 Ended on {new Date(endDate).toLocaleDateString()}
 
             </p>
@@ -51,6 +52,9 @@ function TourCard({
                 })
                 }
             </div>
+            <Link to ={`/tours/${_id}/edit`}>
+            <FilePenLine className="absolute h-8 w-8 top-2 right-2 cursor-pointer" />
+            </Link>
         </div>
     )
 }
