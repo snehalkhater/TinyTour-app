@@ -31,13 +31,13 @@ function Login() {
         password: "",
       });
 
-      const {jwtToken, data} = response.data;
+      const { jwtToken, data } = response.data;
       localStorage.setItem("userJwtToken", jwtToken);
-            localStorage.setItem("userData", JSON.stringify(data));
+      localStorage.setItem("userData", JSON.stringify(data));
 
-            setTimeout(() => {
-              window.location.href = "/dashboard";
-            }, 1500);
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 1500);
     } else {
       toast.error(response.data.message, { id: "loginError" });
     }
@@ -47,7 +47,8 @@ function Login() {
   return (
     <div>
       <Navbar />
-      <div className="w-75 block mx-auto mt-10">
+      <h2 className="text-center mt-10 text-gray-800 text-2xl playpen-sans">Welcome Back, Login to your Account</h2>
+      <div className='w-100 mx-auto bg-white p-6 mt-6 rounded-xl shadow-lg'>
         <Input type="email"
           placeholder="Email"
           value={loginUser.email}
@@ -64,8 +65,8 @@ function Login() {
         />
         <Button
           title="Login"
-         size="medium" 
-         variant="primary" 
+          size="medium"
+          variant="primary"
           onClick={checkUserLogin}
         />
 

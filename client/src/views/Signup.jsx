@@ -42,9 +42,10 @@ function Signup() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Navbar />
-      <div className='w-75 block mx-auto '>
+      <h2 className="text-center text-2xl playpen-sans mt-5">Create Your Account</h2>
+      <div className='w-100 mx-auto bg-white p-6 mt-6 rounded-xl shadow-lg'>
         <Input type="text"
           placeholder="Name"
           value={newUser.name}
@@ -91,10 +92,9 @@ function Signup() {
           title="Signup"
           onClick={createUser}
         />
-         <Link to="/login" className="block my-2 text-blue-500">Already have an account? Login</Link>
+        <Link to="/login" className="block my-2 text-blue-500">Already have an account? Login</Link>
       </div>
       <Toaster position="top-center" />
-
     </div>
   )
 }

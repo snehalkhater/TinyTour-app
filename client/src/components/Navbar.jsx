@@ -19,23 +19,28 @@ function Navbar() {
     fetchUserData();
   }, []);
   return (
-<div className=" backdrop-blur-md bg-teal-500/70 rounded-full max-w-4xl mx-auto px-6 py-4 flex justify-between items-center shadow-xl mt-6 border border-white/30">
+    <div className="bg-teal-400 rounded-full max-w-4xl mx-auto px-6 py-4 flex justify-between items-center shadow-xl mt-6 border border-white/30">
       <div>
         <Link to="/">
-        <img src={Logo} alt="logo" className='h-8 inline-block' />
-        <span className="playpen-sans">Tiny Tours</span>
+          <img src={Logo} alt="logo" className='h-10 w-10 inline-block' />
+          <span className="playpen-sans text-xl">Tiny Tours</span>
         </Link>
       </div>
       <div>
         {
           userData?.name ? (
             <Link to='/dashboard' className="flex item-center gap-2">
-              <Avtar name={userData.name} size="lg"/>
+              <Avtar name={userData.name} size="lg" />
               Hello, {userData.name}!
               <div><Button title="logout" varient="tertiary" size="medium" onClick={logoutUser} /></div>
             </Link>
           ) : (
-            <Link to="/login" className="bg-white text-blue-500 px-3 py-1 rounded mr-2">Login</Link>
+            <Link to="/login">
+              <Button title="Login"
+                variant="primary"
+                size="medium"
+              />
+            </Link>
           )
         }
 

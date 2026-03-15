@@ -7,6 +7,7 @@ import addNewTour from "./../assets/add-new-tour.png"
 import { Link } from 'react-router';
 import TourCard from '../components/TourCard';
 
+
 function Dashboard() {
 
     const userJWT = getuserJwtToken();
@@ -70,6 +71,7 @@ const deleteTour = async (id) => {
                 </div>
                 <Toaster />
             </div>
+               
         </div>
     )
 }
