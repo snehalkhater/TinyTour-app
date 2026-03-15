@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useState, useRef } from 'react';
 import { setPageTitle, getuserJwtToken } from "./../utils.jsx";
 import Navbar from '../components/Navbar';
@@ -16,6 +15,7 @@ import {
 } from "@imagekit/react";
 import PhotoViewer from "./../components/PhotoViewer.jsx"
 
+
 function NewTour() {
   const [newTour, setNewTour] = useState({
     "title": "",
@@ -30,36 +30,28 @@ function NewTour() {
 
   const authenticator = async () => {
     try {
-      // Perform the request to the upload authentication endpoint.
-      const response = await fetch("http://localhost:8080/auth");
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`);
       if (!response.ok) {
-        // If the server response is not successful, extract the error text for debugging.
         const errorText = await response.text();
         throw new Error(`Request failed with status ${response.status}: ${errorText}`);
       }
-
-      // Parse and destructure the response JSON for upload credentials.
       const data = await response.json();
       const { signature, expire, token, publicKey } = data;
       return { signature, expire, token, publicKey };
     } catch (error) {
-      // Log the original error for debugging before rethrowing a new error.
       console.error("Authentication error:", error);
       throw new Error("Authentication request failed");
     }
   };
   const handleUpload = async () => {
-    // Access the file input element using the ref
+
     const fileInput = fileInputRef.current;
     if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
       alert("Please select a file to upload");
       return;
     }
-
-    // Extract the first file from the file input
     const file = fileInput.files[0];
 
-    // Retrieve authentication parameters for the upload.
     let authParams;
     try {
       authParams = await authenticator();
@@ -68,18 +60,14 @@ function NewTour() {
       return;
     }
     const { signature, expire, token, publicKey, } = authParams;
-
-    // Call the ImageKit SDK upload function with the required parameters and callbacks.
     try {
       const uploadResponse = await upload({
-        // Authentication parameters
         expire,
         token,
         signature,
         publicKey,
         file,
-        fileName: file.name, // Optionally set a custom file name
-        // Progress callback to update upload progress state
+        fileName: file.name,
         onProgress: (event) => {
           setProgress((event.loaded / event.total) * 100);
         },
@@ -103,7 +91,6 @@ function NewTour() {
       } else if (error instanceof ImageKitServerError) {
         console.error("Server error:", error.message);
       } else {
-        // Handle any other errors that may occur.
         console.error("Upload error:", error);
       }
     }
@@ -122,9 +109,8 @@ function NewTour() {
       toast.success(response.data.message);
     } else {
       toast.error("failed to add the tours");
-    }
-  };
-
+    };
+  }
 
   useEffect(() => {
     setPageTitle("New Tour - TinyTours");
@@ -195,18 +181,22 @@ function NewTour() {
             })
           }}
         />
-        <div className='flex gap-x-2'>
-          {newTour.photos?.map((photo, index) => (
-            <PhotoViewer key={index} imgUrl={photo} index={index} onDelete={(url) => {
-              setNewTour({
-                ...newTour, photos: newTour.photos.filter((p) => p !== url)
-              })
-            }}
+        <div className="flex gap-2">
+          {newTour.photos.map((photo, index) => (
+            <PhotoViewer
+              key={index}
+              imgUrl={photo}
               showDelete
+              onDelete={(url) =>
+                setNewTour((prev) => ({
+                  ...prev,
+                  photos: prev.photos.filter((p) => p !== url),
+                }))
+              }
             />
           ))}
         </div>
-        <input
+         <input
           type="file"
           ref={fileInputRef}
           onChange={(e) => {

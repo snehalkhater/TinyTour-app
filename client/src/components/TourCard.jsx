@@ -1,4 +1,4 @@
-import { Building2, Footprints, Goal, FilePenLine } from "lucide-react";
+import { Building2, Footprints, Goal, FilePenLine, Trash2 } from "lucide-react";
 import Avtar from "./Avtar";
 import PhotoViewer from "./PhotoViewer";
 import { Link } from "react-router";
@@ -15,11 +15,12 @@ function TourCard({
     endDate,
     createdAt,
     updatedAt,
+    onDelete
 }) {
 
     const { name, email } = user || {};
     return (
-        <div className='relative border border-gray-500 px-4 py-2 rounded-md mb-4 shadow-md bg-white'>
+        <div className="relative bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-5 mb-6">
             <h2 className='text-xl playpen-sans'>{title}</h2>
             <p className='text-xs text-gray-500 playpen-sans'>{description}</p>
             <p className="my-2">
@@ -52,9 +53,17 @@ function TourCard({
                 })
                 }
             </div>
-            <Link to ={`/tours/${_id}/edit`}>
-            <FilePenLine className="absolute h-8 w-8 top-2 right-2 cursor-pointer" />
-            </Link>
+            <div className="absolute top-2 right-2 flex gap-3">
+                <Link to={`/tours/${_id}/edit`}>
+                    <FilePenLine className="h-6 w-6 cursor-pointer text-gray-700 hover:text-black" />
+                </Link>
+
+                <Trash2
+                    className="h-6 w-6 text-red-500 cursor-pointer hover:text-red-700"
+                    onClick={() => onDelete(_id)}
+                />
+            </div>
+
         </div>
     )
 }

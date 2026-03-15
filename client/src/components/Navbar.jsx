@@ -19,7 +19,7 @@ function Navbar() {
     fetchUserData();
   }, []);
   return (
-<div className="backdrop-blur-md bg-teal-500/70 rounded-full max-w-4xl mx-auto px-6 py-4 flex justify-between items-center shadow-xl mt-6 border border-white/30">
+<div className=" backdrop-blur-md bg-teal-500/70 rounded-full max-w-4xl mx-auto px-6 py-4 flex justify-between items-center shadow-xl mt-6 border border-white/30">
       <div>
         <Link to="/">
         <img src={Logo} alt="logo" className='h-8 inline-block' />

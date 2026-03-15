@@ -10,11 +10,11 @@ function Home() {
       <img 
         src={ImgHero} 
         alt="home hero image"  
-        className="w-100 block mx-auto"
+        className="w-100 block mx-auto animate-bounce"
       />
 
-      <h1 className="text-center text-5xl playpen-sans">Tiny Tours</h1>
-      <p className="text-center playpen-sans">Travel the world, discover new places, and collect beautiful memories along the Tiny Tours.</p>
+      <h1 className="text-center text-5xl playpen-sans ">Tiny Tours</h1>
+      <p className="text-center playpen-sans mt-4">Travel the world, discover new places, and collect beautiful memories along the Tiny Tours.</p>
     
     <div className="text-center my-4">
     <Button 
