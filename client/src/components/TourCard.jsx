@@ -35,15 +35,19 @@ function TourCard({
             </p>
 
             <p className="flex items-center my-2 text-sm">
-                <Footprints className="mx-2 h-6 w-6" />Started on:{new Date(startDate).toLocaleDateString()}
+                <Footprints className="mx-2 h-6 w-6" />Started on: {new Date(startDate).toLocaleDateString()}
                 <Goal className="mx-4 h-6 w-6" />
-                Ended on {new Date(endDate).toLocaleDateString()}
+                Ended on: {new Date(endDate).toLocaleDateString()}
 
             </p>
 
 
-            <div className="flex items-center">
-                <span>Posterd by: <Avtar name={name} size="md" /><strong>{name}</strong></span>
+            <div className="flex items-center gap-2">
+                <span className="flex items-center gap-2">
+                    Posted by:
+                    <strong>{name}</strong>
+                    <Avtar name={name} size="md" />
+                </span>
             </div>
 
             <div className="flex">
