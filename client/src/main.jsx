@@ -8,6 +8,7 @@ import Tours from "./views/Tours.jsx"
 import NewTour from './views/NewTour';
 import EditTour from './views/EditTour';
 import Dashboard from './views/Dashboard.jsx';
+import Profile from './views/Profile';
 
 const root = createRoot(document.getElementById("root"));
 
@@ -20,6 +21,7 @@ root.render(
       <Route path='/dashboard' element={<Dashboard />}></Route>
       <Route path='/tours' element={<Tours />}></Route>
       <Route path='/tours/new' element={<NewTour />}></Route>
+      <Route path='/profile' element={<Profile/>}/>
       <Route path='/tours/:id/edit' element={<EditTour />}></Route>
     </Routes>
   </BrowserRouter>
