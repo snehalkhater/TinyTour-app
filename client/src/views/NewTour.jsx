@@ -114,7 +114,7 @@ function NewTour() {
     setPageTitle("New Tour - TinyTours");
   }, []);
   return (
-    <div>
+    <div className="min-h-screen">
       <Navbar />
       <h1 className='text-center mt-10 playpen-sans text-xl'>Let's Add a New Travel Story</h1>
       <div className='w-85 block mx-auto my-3'>
@@ -157,6 +157,7 @@ function NewTour() {
             });
           }}
         />
+        <div className='flex gap-2'>
         <Input type="date"
           placeholder="Enter Start Date..."
           value={newTour.startDate}
@@ -179,7 +180,8 @@ function NewTour() {
             })
           }}
         />
-        <div className="flex gap-2">
+        </div>
+        <div className="flex gap-2 grid grid-cols-3 gap-3">
           {newTour.photos.map((photo, index) => (
             <PhotoViewer
               key={index}
@@ -194,18 +196,26 @@ function NewTour() {
             />
           ))}
         </div>
-         <input
+       <div className="border-2 border-dashed border-purple-300 rounded-xl p-6 text-center hover:bg-purple-50 transition">
+        <p className="text-gray-500 mb-2">📸 Upload Photos</p>
+
+        <input
           type="file"
           ref={fileInputRef}
+          className="cursor-pointer"
           onChange={(e) => {
-            console.log("file selected");
-            console.log(e.target.files)
             if (e.target.files.length > 0) {
               handleUpload();
             }
           }}
         />
-        {progress > 0 ? `Uploading...${progress}%` : null}
+
+        {progress > 0 && (
+          <div className="mt-3 text-sm text-purple-600">
+            Uploading... {Math.round(progress)}%
+          </div>
+        )}
+      </div>
       </div>
       <div className='w-80 block mx-auto mt-10'>
         <Button title="Add Tour"
