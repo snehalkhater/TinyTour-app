@@ -22,7 +22,7 @@ root.render(
       <Route path='/dashboard' element={<Dashboard />}></Route>
       <Route path='/tours' element={<Tours />}></Route>
       <Route path='/tours/new' element={<NewTour />}></Route>
-      <Route path='/profile' element={<Profile />}/>
+      <Route path='/profile' element={<Profile/>}/>
       <Route path='/tours/:id/edit' element={<EditTour />}></Route>
       <Route path='/wishlist' element={<Wishlist />}></Route>
     </Routes>

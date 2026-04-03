@@ -9,6 +9,7 @@ import { Heart } from "lucide-react";
 
 
 
+
 function Navbar() {
   const [userData, setUserData] = useState({});
   const fetchUserData = () => {
@@ -31,7 +32,7 @@ function Navbar() {
 
         {
           userData?.name ? (
-            <Link to='/dashboard' className="flex item-center gap-2">
+            <Link to='/profile' className="flex item-center gap-2">
               <Avtar name={userData.name} size="lg" />
               Hello, {userData.name}!
               <div><Button title="logout" varient="tertiary" size="medium" onClick={logoutUser} /></div>

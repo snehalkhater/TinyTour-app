@@ -1,7 +1,8 @@
-function Input({type, placeholder, value, onChange,onKeyDown,ref}) {
+function Input({type,name, placeholder, value, onChange,onKeyDown,ref}) {
   return (
     < input 
     type={type}
+    name={name}  
     placeholder={placeholder}
     value={value}
     onChange={onChange}
