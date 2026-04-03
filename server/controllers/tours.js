@@ -1,6 +1,7 @@
-import tour from "../models/Tour.js";
 import Tour from "../models/Tour.js";
 import dotenv from "dotenv";
+import User from "../models/user.js";
+
 dotenv.config();
 
 const getTours = async (req, res) => {
@@ -136,4 +137,68 @@ const deleteTour = async (req, res) => {
     });
   }
 };
-export { getTours, postTour, putTours, getTourById, deleteTour };
+
+
+
+const addToWishlist = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user.wishlist.includes(req.params.id)) {
+      user.wishlist.push(req.params.id);
+      await user.save();
+    }
+
+    return res.json({
+      success: true,
+      message: "Added to wishlist"
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+const removeFromWishlist = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    user.wishlist = user.wishlist.filter(
+      id => id.toString() !== req.params.id
+    );
+
+    await user.save();
+
+    return res.json({
+      success: true,
+      message: "Removed from wishlist"
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false
+    });
+  }
+};
+
+const getWishlist = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    const tours = await Tour.find({
+      _id: { $in: user.wishlist }
+    });
+
+    res.json({
+      success: true,
+      data: tours
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+export { getTours, postTour, putTours, getTourById, deleteTour, addToWishlist, removeFromWishlist, getWishlist };

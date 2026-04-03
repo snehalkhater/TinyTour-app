@@ -28,9 +28,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  wishlist: [
+    {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Tour",
+      default: []
+    }
+  ]
 },
- {timestamps: true}
+  { timestamps: true }
 );
+
 
 const User = mongoose.model("User", userSchema);
 
