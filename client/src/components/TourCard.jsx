@@ -7,73 +7,62 @@ import axios from "axios";
 import { getuserJwtToken } from "../utils";
 
 function TourCard({
-    _id,
-    title,
-    description,
-    cities,
-    photos,
-    user,
-    startDate,
-    endDate,
-    onDelete
+  _id,
+  title,
+  description,
+  photos,
+  user,
+  startDate,
+  endDate,
+  cities,
+  onRemoveFromWishlist
 }) {
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const token = getuserJwtToken();
 
-    const [isWishlisted, setIsWishlisted] = useState(false);
-    const token = getuserJwtToken();
-
+  // Check if already in wishlist
+  useEffect(() => {
     const checkWishlist = async () => {
-        try {
-            const res = await axios.get(
-                `${import.meta.env.VITE_API_BASE_URL}/wishlist`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
-
-            const exists = res.data.data.some(item => item._id === _id);
-            setIsWishlisted(exists);
-
-        } catch (err) {
-            console.log(err);
-        }
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/wishlist`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const exists = res.data.data.some(item => item._id === _id);
+        setIsWishlisted(exists);
+      } catch (err) {
+        console.log(err);
+      }
     };
+    checkWishlist();
+  }, [_id, token]);
 
-    useEffect(() => {
-        checkWishlist();
-    }, [_id]);
+  // ✅ Toggle wishlist
+  const toggleWishlist = async () => {
+    try {
+      if (isWishlisted) {
+        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/wishlist/${_id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setIsWishlisted(false);
 
-    const toggleWishlist = async () => {
-        try {
-            if (isWishlisted) {
-                await axios.delete(
-                    `${import.meta.env.VITE_API_BASE_URL}/wishlist/${_id}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
-                );
-                setIsWishlisted(false);
-            } else {
-                await axios.post(
-                    `${import.meta.env.VITE_API_BASE_URL}/wishlist/${_id}`,
-                    {},
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
-                );
-                setIsWishlisted(true);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
+        // ✅ Notify parent to remove immediately
+        if (onRemoveFromWishlist) onRemoveFromWishlist(_id);
 
-    const { name } = user || {};
+      } else {
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/wishlist/${_id}`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setIsWishlisted(true);
+        toast.success("Tour added to wishlist");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to update wishlist");
+    }
+  };
+
+  const { name } = user || {};
+
 
     return (
         <div className="relative bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-5 mb-6">

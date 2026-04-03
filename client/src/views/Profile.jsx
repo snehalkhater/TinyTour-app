@@ -4,8 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Input from "../components/Input";
 import { getuserJwtToken } from "../utils";
-import { Edit2 } from "lucide-react";
-import Avtar from "../components/Avtar";
+import { SquarePen } from "lucide-react";
+
 
 function Profile() {
   const [user, setUser] = useState({
@@ -67,16 +67,17 @@ function Profile() {
     <div className="min-h-screen">
       <Navbar />
 
-      <div className="max-w-md mx-auto mt-14 p-6 bg-white rounded-3xl shadow-lg relative">
-        <Edit2
+      <div className=" max-w-md mx-auto mt-14 p-6 bg-white rounded-3xl shadow-lg relative">
+        <SquarePen 
           size={24}
           className="absolute top-5 right-5 text-indigo-500 cursor-pointer hover:text-indigo-700"
           onClick={() => setIsEditing(!isEditing)}
           title={isEditing ? "Cancel Edit" : "Edit Profile"}
         />
 
+
         <div className="flex justify-center mb-6 relative">
-          <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-indigo-400 shadow-lg relative">
+          <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-indigo-200 shadow-lg relative">
             {user.profilePhoto ? (
               <img
                 src={user.profilePhoto}
@@ -84,11 +85,10 @@ function Profile() {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-indigo-200 text-white text-4xl font-bold uppercase">
+              <div className="w-full h-full flex items-center justify-center bg-indigo-500 text-white text-4xl font-bold uppercase">
                 {user.name?.[0] || "U"}
               </div>
             )}
-
           </div>
         </div>
         <div className="space-y-4">
