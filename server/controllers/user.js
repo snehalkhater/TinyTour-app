@@ -1,12 +1,8 @@
 import User from "../models/user.js";
-import dotenv from "dotenv";
-dotenv.config();
-
 
 const getUser = async (req, res) => {
   try {
-     const user=req.user;
-    const userId=user.id;
+    const userId = req.user.id;
 
     if (!userId) {
       return res.status(401).json({
@@ -38,14 +34,14 @@ const getUser = async (req, res) => {
   }
 };
 
-const updateUser =async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const userId = req.user.id;
-
     const { name, email, phone, city, country, profilePhoto } = req.body;
 
     if (email) {
       const existingUser = await User.findOne({ email });
+
       if (existingUser && existingUser._id.toString() !== userId) {
         return res.status(400).json({
           success: false,
@@ -55,12 +51,21 @@ const updateUser =async (req, res) => {
     }
 
     const updateFields = {};
-    if (name) updateFields.name = name;
-    if (email) updateFields.email = email;
+
+    if (name) updateFields.name = name.trim();
+    if (email) updateFields.email = email.toLowerCase();
     if (phone) updateFields.phone = phone;
-    if (city) updateFields.city = city;
-    if (country) updateFields.country = country;
+    if (city) updateFields.city = city.trim();
+    if (country) updateFields.country = country.trim();
     if (profilePhoto) updateFields.profilePhoto = profilePhoto;
+
+
+    if (Object.keys(updateFields).length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No fields to update",
+      });
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -69,7 +74,8 @@ const updateUser =async (req, res) => {
         new: true,
         runValidators: true,
       }
-    ).select("-password"); 
+    ).select("-password");
+
     if (!updatedUser) {
       return res.status(404).json({
         success: false,
