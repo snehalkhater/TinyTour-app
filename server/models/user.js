@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  profilePhoto: {
+    type: String,
+    default: "",
+  },
+  
   wishlist: [
     {
       type: [mongoose.Schema.Types.ObjectId],

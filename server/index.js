@@ -7,6 +7,7 @@ import { getHome, getHealth } from './controllers/health.js';
 import { postSignup, postLogin } from './controllers/auth.js';
 import { getTours, postTour, putTours, getTourById, deleteTour, addToWishlist, removeFromWishlist, getWishlist } from './controllers/tours.js';
 import ImageKit from "@imagekit/nodejs";
+import { getUser, updateUser } from './controllers/user.js';
 
 
 const app = express();
@@ -40,6 +41,9 @@ app.delete('/tours/:id', checkJWT, deleteTour);
 app.post("/wishlist/:id", checkJWT, addToWishlist);
 app.delete("/wishlist/:id", checkJWT, removeFromWishlist);
 app.get("/wishlist", checkJWT, getWishlist);
+
+app.get('/user', checkJWT, getUser);
+app.put('/user', checkJWT, updateUser);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
