@@ -138,8 +138,6 @@ const deleteTour = async (req, res) => {
   }
 };
 
-
-
 const addToWishlist = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
