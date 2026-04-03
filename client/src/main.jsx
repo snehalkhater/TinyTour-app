@@ -9,6 +9,7 @@ import NewTour from './views/NewTour';
 import EditTour from './views/EditTour';
 import Dashboard from './views/Dashboard.jsx';
 import Profile from './views/Profile';
+import Wishlist from './views/Wishlist.jsx';
 
 const root = createRoot(document.getElementById("root"));
 
@@ -23,6 +24,7 @@ root.render(
       <Route path='/tours/new' element={<NewTour />}></Route>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/tours/:id/edit' element={<EditTour />}></Route>
+      <Route path='/wishlist' element={<Wishlist />}></Route>
     </Routes>
   </BrowserRouter>
 

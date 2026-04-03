@@ -23,7 +23,7 @@ function Home() {
           variant="tertiary"
           size="large"
           onClick={() => {
-            window.location.href = "/dashboard"
+            window.location.href = "/dashboard";
           }}
         />
       </div>

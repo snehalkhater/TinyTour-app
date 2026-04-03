@@ -5,6 +5,7 @@ import Button from "./Button";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router";
 import Avtar from "./Avtar";
+import { Heart } from "lucide-react";
 
 
 
@@ -21,12 +22,13 @@ function Navbar() {
   return (
     <div className="bg-teal-400 rounded-full max-w-4xl mx-auto px-6 py-4 flex justify-between items-center shadow-xl mt-6 border border-white/30">
       <div>
-        <Link to="/">
-          <img src={Logo} alt="logo" className='h-10 w-10 inline-block' />
-          <span className="playpen-sans text-xl">Tiny Tours</span>
+        <Link to="/" className="flex items-center gap-2">
+          <img src={Logo} alt="logo" className='h-10 w-10' />
+          <span className="playpen-sans text-xl text-white">Tiny Tours</span>
         </Link>
       </div>
-      <div>
+      <div className="flex items-center gap-4">
+
         {
           userData?.name ? (
             <Link to='/dashboard' className="flex item-center gap-2">
@@ -43,6 +45,9 @@ function Navbar() {
             </Link>
           )
         }
+        <Link to="/wishlist">
+          <Heart className="w-7 h-7 text-red-500 fill-red-500 cursor-pointer" />
+        </Link>
 
       </div>
       <Toaster />
