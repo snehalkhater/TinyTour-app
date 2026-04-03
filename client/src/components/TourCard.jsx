@@ -20,7 +20,6 @@ function TourCard({
   const [isWishlisted, setIsWishlisted] = useState(false);
   const token = getuserJwtToken();
 
-  // Check if already in wishlist
   useEffect(() => {
     const checkWishlist = async () => {
       try {
@@ -36,7 +35,7 @@ function TourCard({
     checkWishlist();
   }, [_id, token]);
 
-  // ✅ Toggle wishlist
+
   const toggleWishlist = async () => {
     try {
       if (isWishlisted) {
@@ -45,7 +44,6 @@ function TourCard({
         });
         setIsWishlisted(false);
 
-        // ✅ Notify parent to remove immediately
         if (onRemoveFromWishlist) onRemoveFromWishlist(_id);
 
       } else {

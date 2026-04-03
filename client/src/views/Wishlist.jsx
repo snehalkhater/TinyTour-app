@@ -9,7 +9,6 @@ function Wishlist() {
   const [tours, setTours] = useState([]);
   const token = getuserJwtToken();
 
-  // Fetch wishlist
   const fetchWishlist = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/wishlist`, {
@@ -26,7 +25,6 @@ function Wishlist() {
     fetchWishlist();
   }, []);
 
-  // ✅ Parent callback: remove tour immediately
   const handleRemoveFromWishlist = (id) => {
     setTours(prev => prev.filter(tour => tour._id !== id)); // UI update
     toast.success("Tour removed from wishlist"); // Show message
